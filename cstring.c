@@ -195,8 +195,7 @@ static void strr_catv(string_t *s, char *str, va_list args) {
     str_clone(s, formatted);
   } else {
     // Concatenate formatted string to the end
-    str_mem_append(s, str_ptr(formatted),
-                   formatted.len);
+    str_mem_append(s, str_ptr(formatted), formatted.len);
   }
 }
 
@@ -915,7 +914,7 @@ static void str_clone(string_t *target, string_t s) {
 }
 
 static void str_clone_from_chr(string_t *target, char *c, size_t len) {
-  
+
   if (!target)
     return;
 
@@ -1036,6 +1035,66 @@ static string_t str_from_format(char *str, va_list args) {
   return s;
 }
 
+static void str_mem_insert(string_t *string, size_t offset, void *data,
+                    size_t data_len) {
+
+  if (!string)
+    return;
+
+  if (!data)
+    return;
+
+  if (offset > string->len)
+    offset = string->len;
+
+  str_heapify(string);
+
+  string->str = realloc(string->str, string->len + data_len + 1);
+
+  if (!string->str)
+    return;
+
+  memmove(string->str + offset + data_len, string->str + offset,
+          string->len - offset);
+
+  memcpy(string->str + offset, data, data_len);
+
+  string->len += data_len;
+
+  *(string->str + string->len) = 0;
+}
+
+static void str_mem_replace(string_t *string, size_t offset, size_t len, void *data,
+                     size_t data_len) {
+
+  if (!string)
+    return;
+
+  if (!data)
+    return;
+
+  if (offset >= string->len)
+    offset = string->len - 1;
+
+  if (offset + len > string->len)
+    len = string->len - offset;
+
+  str_heapify(string);
+
+  string->str = realloc(string->str, string->len + data_len - len + 1);
+
+  if (!string->str)
+    return;
+
+  memmove(string->str + offset + data_len, string->str + offset + len,
+          string->len - offset - len);
+
+  memcpy(string->str + offset, data, data_len);
+
+  string->len += data_len - len;
+
+  *(string->str + string->len) = 0;
+}
 
 /**
  * string: pointer to the string
@@ -1043,10 +1102,12 @@ static string_t str_from_format(char *str, va_list args) {
  * data: data to be appended
  * data_len: size of the data to be appended
  * */
-static void str_mem_append(string_t *string, void *data,
-                           size_t data_len) {
+static void str_mem_append(string_t *string, void *data, size_t data_len) {
 
   if (!string)
+    return;
+
+  if (!data)
     return;
 
   str_heapify(string);

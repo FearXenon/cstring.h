@@ -612,6 +612,25 @@ static void test_mem() {
 
   assert(heapstring.str == 0);
 
+  tmp = malloc(5);
+  memset(tmp, 65, 4); 
+  *(tmp + 4) = 0;
+
+  /*string_t insert_test = str("abcdef");*/
+  /*str_mem_insert(&insert_test, 5, tmp, 2);*/
+  /**/
+  /*printf("%s\n", insert_test.str);*/
+  /**/
+  /*memset(tmp, 66, 4); */
+  /*str_mem_replace(&insert_test, 8, 2, tmp, 1); */
+  /**/
+  /*printf("%s\n", insert_test.str);*/
+
+  /*str_free(&insert_test);*/
+  free(tmp);
+
+  
+
   done;
 }
 

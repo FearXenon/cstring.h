@@ -117,6 +117,7 @@ static void str_clone(string_t *target, string_t s);
 static void str_clone_from_chr(string_t *target, char* c, size_t len);
 static string_t str_from_format(char *str, va_list args);
 static void str_mem_insert(string_t *string, size_t offset, void *data, size_t data_len);
+static void str_mem_replace(string_t *string, size_t offset, size_t len, void* data, size_t data_len);
 static void str_mem_append(string_t *string, void *data,
                            size_t data_len);
 
