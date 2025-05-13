@@ -2,7 +2,7 @@
 SRCS = $(shell find . -name '*.c')
 OBJS = $(SRCS:.c=.o)
 
-TARGET = main
+TARGET = test 
 
 .PHONY: all run clean
 
@@ -10,6 +10,9 @@ all: $(TARGET)
 
 run:
 	./$(TARGET)
+
+check-leaks:
+	valgrind --track-origins=yes --leak-check=full -s ./$(TARGET)
 
 clean:
 	rm -f $(OBJS)
