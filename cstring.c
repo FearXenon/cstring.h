@@ -356,8 +356,7 @@ size_t str_pos(string_t s, const string_t search) {
   while (*cl && cl <= c_end) {
 
     while (*c && *c == *search_c && c <= c_end) {
-      c++;
-      search_c++;
+      c++, search_c++;
     }
 
     // found the string
@@ -369,8 +368,7 @@ size_t str_pos(string_t s, const string_t search) {
       // reset search pointer
       search_c = search.str;
     }
-    cl++;
-    c++;
+    cl++, c++;
   }
 
   return pos;
@@ -398,8 +396,7 @@ size_t str_ipos(string_t s, const string_t search) {
   while (*cl && cl <= c_end) {
 
     while (*c && tolower(*c) == tolower(*search_c) && c <= c_end) {
-      c++;
-      search_c++;
+      c++, search_c++;
     }
 
     // found the string
@@ -411,8 +408,7 @@ size_t str_ipos(string_t s, const string_t search) {
       // reset search pointer
       search_c = search.str;
     }
-    cl++;
-    c++;
+    cl++, c++;
   }
 
   return pos;
@@ -625,13 +621,11 @@ string_t *strr_trim(string_t *s) {
   str_heapify(s);
 
   while (str_chr_is_ws(c) && len > 0) {
-    c++;
-    len--;
+    c++, len--;
   }
 
   while (str_chr_is_ws(c_end) && len > 0) {
-    c_end--;
-    len--;
+    c_end--, len--;
   }
 
   char *tmp = malloc(len + 1);
@@ -676,8 +670,7 @@ string_t *strr_rtrim(string_t *s) {
   str_heapify(s);
 
   while (str_chr_is_ws(c_end) && len > 0) {
-    c_end--;
-    len--;
+    c_end--, len--;
   }
 
   char *tmp = malloc(len + 1);
@@ -719,8 +712,7 @@ string_t *strr_ltrim(string_t *s) {
   size_t start = 0;
   size_t len = s->len;
   while (str_chr_is_ws(c) && len > 0) {
-    c++;
-    len--;
+    c++, len--;
   }
 
   char *tmp = malloc(len + 1);
@@ -894,7 +886,7 @@ char str_token_next(tokenizer_t *tok, string_t *s) {
  * clones the given string into the pointer
  * clones the char* aswell
  * */
-static void str_clone(string_t *target, string_t s) {
+void str_clone(string_t *target, string_t s) {
 
   if (!target)
     return;
@@ -913,7 +905,7 @@ static void str_clone(string_t *target, string_t s) {
   *(target->str + s.len) = 0;
 }
 
-static void str_clone_from_chr(string_t *target, char *c, size_t len) {
+void str_clone_from_chr(string_t *target, char *c, size_t len) {
 
   if (!target)
     return;
@@ -999,8 +991,7 @@ static string_t str_from_format(char *str, va_list args) {
       case 's':
         arg_c_str = va_arg(args, char *);
         while (*arg_c_str) {
-          tmp_len++;
-          arg_c_str++;
+          tmp_len++, arg_c_str++;
         }
         len += tmp_len;
 
@@ -1015,8 +1006,7 @@ static string_t str_from_format(char *str, va_list args) {
     } else {
       char *str_start = str;
       while (*str && *str != '%') {
-        str++;
-        len++;
+        str++, len++;
         if (!*str || *str == '%') {
           str_mem_append(&s, str_start, str - str_start);
         }
@@ -1035,7 +1025,7 @@ static string_t str_from_format(char *str, va_list args) {
   return s;
 }
 
-static void str_mem_insert(string_t *string, size_t offset, void *data,
+void str_mem_insert(string_t *string, size_t offset, void *data,
                     size_t data_len) {
 
   if (!string)
@@ -1064,7 +1054,7 @@ static void str_mem_insert(string_t *string, size_t offset, void *data,
   *(string->str + string->len) = 0;
 }
 
-static void str_mem_replace(string_t *string, size_t offset, size_t len, void *data,
+void str_mem_replace(string_t *string, size_t offset, size_t len, void *data,
                      size_t data_len) {
 
   if (!string)
@@ -1102,7 +1092,7 @@ static void str_mem_replace(string_t *string, size_t offset, size_t len, void *d
  * data: data to be appended
  * data_len: size of the data to be appended
  * */
-static void str_mem_append(string_t *string, void *data, size_t data_len) {
+void str_mem_append(string_t *string, void *data, size_t data_len) {
 
   if (!string)
     return;

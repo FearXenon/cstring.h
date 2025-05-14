@@ -1,4 +1,5 @@
 #include "cstring.h"
+#include "encoding.h"
 #include <assert.h>
 #include <stdint.h>
 #include <stdio.h>
