@@ -115,6 +115,7 @@ void str_heapify(string_t *s) {
     if (tmp)
       memcpy(tmp, str_ptr(*s), s->len);
 
+    *(tmp + s->len) = 0;
     s->str = tmp;
 
     // the char* is heap allocated and the current string_t is the owner of it
@@ -526,6 +527,7 @@ string_t *strr_replace(string_t *s, const string_t search,
   char *s_cpy_chr = s_cpy.str;
 
   str_free(s);
+  *s = str_null;
 
   size_t pos;
   while ((pos = str_pos(s_cpy, search)) != -1) {

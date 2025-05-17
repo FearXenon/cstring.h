@@ -359,6 +359,86 @@ static void test_str_replace() {
   assert(str_equals(s, str("bb")));
   str_free(&s);
 
+  // test strr_replace
+
+  // Basic replacement
+  s = str("abc");
+  strr_replace(&s, str("b"), str("d"));
+  assert(str_equals(s, str("adc")));
+  str_free(&s);
+
+  // No match
+  s = str("abc");
+  strr_replace(&s, str("x"), str("d"));
+  assert(str_equals(s, str("abc")));
+  str_free(&s);
+
+  // Replace all instances
+  s = str("banana");
+  strr_replace(&s, str("a"), str("o"));
+  assert(str_equals(s, str("bonono")));
+  str_free(&s);
+
+  // Replace with empty string (deletion)
+  s = str("hello world");
+  strr_replace(&s, str("l"), str(""));
+  assert(str_equals(s, str("heo word")));
+  str_free(&s);
+
+  // Insert something in place of empty string (edge case: empty `from`)
+  s = str("abc");
+  strr_replace(&s, str(""), str("x"));
+  assert(str_equals(s, str("abc")));
+  str_free(&s);
+
+  // Replace spaces with nothing
+  s = str("spaces test");
+  strr_replace(&s, str(" "), str(""));
+  assert(str_equals(s, str("spacestest")));
+  str_free(&s);
+
+  // Replace entire string
+  s = str("aaa");
+  strr_replace(&s, str("aaa"), str("b"));
+  assert(str_equals(s, str("b")));
+  str_free(&s);
+
+  // Empty input string
+  s = str("");
+  strr_replace(&s, str("a"), str("b"));
+  assert(str_equals(s, str("")));
+  str_free(&s);
+
+  // Replace with longer string
+  s = str("abc");
+  strr_replace(&s, str("b"), str("xyz"));
+  assert(str_equals(s, str("axyzc")));
+  str_free(&s);
+
+  // Replace at beginning
+  s = str("abc");
+  strr_replace(&s, str("a"), str("z"));
+  assert(str_equals(s, str("zbc")));
+  str_free(&s);
+
+  // Replace at end
+  s = str("abc");
+  strr_replace(&s, str("c"), str("z"));
+  assert(str_equals(s, str("abz")));
+  str_free(&s);
+
+  // Replace with self (no change expected)
+  s = str("abc");
+  strr_replace(&s, str("b"), str("b"));
+  assert(str_equals(s, str("abc")));
+  str_free(&s);
+
+  // Replace overlapping substrings
+  s = str("aaaa");
+  strr_replace(&s, str("aa"), str("b"));
+  assert(str_equals(s, str("bb")));
+  str_free(&s);
+
   done;
 }
 
@@ -635,6 +715,16 @@ static void test_mem() {
   done;
 }
 
+static void test_encoding() {
+  str_auto teststr = str("üöüä");
+  strr_utf8_encode(&teststr);
+  str_println(teststr);
+
+  str_auto utf8_str = str("üöäi😊");
+  strr_utf8_decode(&utf8_str);
+  str_println(utf8_str);
+}
+
 int main() {
 
   test_str_equals();
@@ -658,6 +748,8 @@ int main() {
   test_str_token();
 
   test_mem();
+
+  test_encoding();
 
   return puts("DONE") < 0;
 }
