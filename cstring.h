@@ -19,6 +19,7 @@ typedef struct string {
   size_t len;
   char flags;
 } string_t;
+typedef string_t str;
 
 typedef struct tokenizer {
   string_t delimiter;
