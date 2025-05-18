@@ -1,9 +1,4 @@
 #include "cstring.h"
-#include <ctype.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 const char *const str_empty_chr = "";
 
@@ -130,7 +125,7 @@ void str_heapify(string_t *s) {
 }
 
 /**
- * frees the char* if the string is its owner 
+ * frees the char* if the string is its owner
  * */
 void str_free(string_t *s) {
 
@@ -764,7 +759,7 @@ string_t *strr_rtrim(string_t *s) {
 }
 
 /**
- * remove whitespaces at the front 
+ * remove whitespaces at the front
  * */
 string_t str_ltrim(const string_t s) {
   string_t s_new = str_null;
@@ -777,7 +772,7 @@ string_t str_ltrim(const string_t s) {
 }
 
 /**
- * remove whitespaces at the front 
+ * remove whitespaces at the front
  * */
 string_t *strr_ltrim(string_t *s) {
 
@@ -900,7 +895,7 @@ string_t *strr_lpad(string_t *s, char c, size_t len) {
   return s;
 }
 
-//TODO: pad with UTF8-chars
+// TODO: pad with UTF8-chars
 /**
  * pad the string to len by appending c
  * */
@@ -1147,7 +1142,7 @@ static string_t str_from_format(char *str, va_list args) {
 /**
  * string: pointer to the string
  * offset: offset to insert-position
- * data: pointer to the insert data 
+ * data: pointer to the insert data
  * data_len: length of the insert data
  * */
 void str_mem_insert(string_t *string, size_t offset, void *data,
@@ -1181,9 +1176,9 @@ void str_mem_insert(string_t *string, size_t offset, void *data,
 
 /**
  * string: pointer to the string
- * offset: offset to the replaced-start 
+ * offset: offset to the replaced-start
  * len: length of the replaced string
- * data: pointer to the replacement data 
+ * data: pointer to the replacement data
  * data_len: length of the replacement data
  * */
 void str_mem_replace(string_t *string, size_t offset, size_t len, void *data,
