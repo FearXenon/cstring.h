@@ -18,6 +18,9 @@ string_t str_init_from_chr(char *c) {
   return s;
 }
 
+/**
+ * initilize a string from a stack allocated char*
+ * */
 void str_init(string_t *s) {
 
   if (!s) {
@@ -72,6 +75,9 @@ string_t str_acquire(const char *c) {
   return s;
 }
 
+/**
+ * create a string from a heap allocated char* and a given length
+ **/
 string_t str_acquire_s(const char *c, size_t len) {
 
   if (!c)
@@ -123,6 +129,9 @@ void str_heapify(string_t *s) {
   }
 }
 
+/**
+ * frees the char* if the string is its owner 
+ * */
 void str_free(string_t *s) {
 
   if (!s)
@@ -140,6 +149,9 @@ int str_print(string_t s) { return printf("%.*s", (int)s.len, s.str); }
 
 int str_println(string_t s) { return printf("%.*s\n", (int)s.len, s.str); }
 
+/**
+ * check if a char is ' ', '\t' or '\r'
+ * */
 int str_chr_is_ws(const char *c) {
   if (!c)
     return 0;
@@ -152,6 +164,9 @@ int str_chr_is_ws(const char *c) {
 
 size_t str_len(const string_t s) { return s.len; }
 
+/**
+ * append to the given string (see str_from_format)
+ * */
 string_t str_cat(const string_t string, char *str, ...) {
   string_t new_s;
   str_clone(&new_s, string);
@@ -166,6 +181,9 @@ string_t str_cat(const string_t string, char *str, ...) {
   return new_s;
 }
 
+/**
+ * append to the given string (see str_from_format)
+ * */
 string_t *strr_cat(string_t *s, char *str, ...) {
 
   if (!s)
@@ -200,6 +218,9 @@ static void strr_catv(string_t *s, char *str, va_list args) {
   }
 }
 
+/**
+ * prepend to the given string (see str_from_format)
+ * */
 string_t str_prepend(const string_t s, char *str, ...) {
   string_t new_s;
   str_clone(&new_s, s);
@@ -214,6 +235,9 @@ string_t str_prepend(const string_t s, char *str, ...) {
   return new_s;
 }
 
+/**
+ * prepend to the given string (see str_from_format)
+ * */
 string_t *strr_prepend(string_t *s, char *str, ...) {
 
   if (!s)
@@ -255,6 +279,9 @@ static void strr_prependv(string_t *s, char *str, va_list args) {
   }
 }
 
+/**
+ * check if two strings are equal (case sensitive)
+ * */
 int str_equals(const string_t s1, const string_t s2) {
   if (s1.len != s2.len) {
     return 0;
@@ -263,6 +290,9 @@ int str_equals(const string_t s1, const string_t s2) {
   return !strcmp(str_ptr(s1), str_ptr(s2));
 }
 
+/**
+ * check if two strings are equal (case insensitive)
+ * */
 int str_equals_ic(const string_t s1, const string_t s2) {
   if (s1.len != s2.len)
     return 0;
@@ -335,6 +365,10 @@ void str_calc_len(string_t *s) {
   s->len = len;
 }
 
+/**
+ * returns the position of the first occurence of search in s (case sensitive)
+ * returns -1 if search is not found
+ * */
 size_t str_pos(string_t s, const string_t search) {
   size_t pos = -1;
 
@@ -375,6 +409,10 @@ size_t str_pos(string_t s, const string_t search) {
   return pos;
 }
 
+/**
+ * returns the position of the first occurence of search in s (case insensitive)
+ * returns -1 if search is not found
+ * */
 size_t str_ipos(string_t s, const string_t search) {
   size_t pos = -1;
 
@@ -415,6 +453,9 @@ size_t str_ipos(string_t s, const string_t search) {
   return pos;
 }
 
+/**
+ * splits the given string into an array of strings
+ * */
 void str_explode(string_t s, const string_t delimiter, string_t **arr,
                  size_t *len) {
 
@@ -456,6 +497,9 @@ void str_explode(string_t s, const string_t delimiter, string_t **arr,
   s.str = s_base;
 }
 
+/**
+ * joins an array of strings into a string
+ * */
 string_t str_implode(const string_t delimiter, string_t *arr, size_t len) {
   string_t s = str_null;
 
@@ -464,6 +508,9 @@ string_t str_implode(const string_t delimiter, string_t *arr, size_t len) {
   return s;
 }
 
+/**
+ * joins an array of strings into a string
+ * */
 string_t *strr_implode(string_t *s, const string_t delimiter, string_t *arr,
                        size_t len) {
 
@@ -485,6 +532,9 @@ string_t *strr_implode(string_t *s, const string_t delimiter, string_t *arr,
   return s;
 }
 
+/**
+ * replaces search with replace in the string
+ * */
 string_t str_replace(string_t s, const string_t search,
                      const string_t replace) {
   string_t s_new = str_null;
@@ -513,6 +563,9 @@ string_t str_replace(string_t s, const string_t search,
   return s_new;
 }
 
+/**
+ * replaces search with replace in the string
+ * */
 string_t *strr_replace(string_t *s, const string_t search,
                        const string_t replace) {
 
@@ -552,6 +605,9 @@ string_t *strr_replace(string_t *s, const string_t search,
   return s;
 }
 
+/**
+ * get the substring of a string using offset and length
+ * */
 string_t str_substr(string_t s, ssize_t offset, ssize_t len) {
   string_t s_new = str_null;
 
@@ -562,6 +618,9 @@ string_t str_substr(string_t s, ssize_t offset, ssize_t len) {
   return s_new;
 }
 
+/**
+ * get the substring of a string using offset and length
+ * */
 string_t *strr_substr(string_t *s, ssize_t offset, ssize_t len) {
 
   if (!s)
@@ -601,6 +660,9 @@ string_t *strr_substr(string_t *s, ssize_t offset, ssize_t len) {
   return s;
 }
 
+/**
+ * remove whitespaces at the end and the front
+ * */
 string_t str_trim(const string_t s) {
   string_t s_new = str_null;
 
@@ -611,6 +673,9 @@ string_t str_trim(const string_t s) {
   return s_new;
 }
 
+/**
+ * remove whitespaces at the end and the front
+ * */
 string_t *strr_trim(string_t *s) {
 
   if (!s)
@@ -647,6 +712,9 @@ string_t *strr_trim(string_t *s) {
   return s;
 }
 
+/**
+ * remove whitespaces at the end
+ * */
 string_t str_rtrim(const string_t s) {
   string_t s_new = str_null;
 
@@ -657,6 +725,9 @@ string_t str_rtrim(const string_t s) {
   return s_new;
 }
 
+/**
+ * remove whitespaces at the end
+ * */
 string_t *strr_rtrim(string_t *s) {
 
   if (!s)
@@ -692,6 +763,9 @@ string_t *strr_rtrim(string_t *s) {
   return s;
 }
 
+/**
+ * remove whitespaces at the front 
+ * */
 string_t str_ltrim(const string_t s) {
   string_t s_new = str_null;
 
@@ -702,6 +776,9 @@ string_t str_ltrim(const string_t s) {
   return s_new;
 }
 
+/**
+ * remove whitespaces at the front 
+ * */
 string_t *strr_ltrim(string_t *s) {
 
   if (!s)
@@ -734,6 +811,9 @@ string_t *strr_ltrim(string_t *s) {
   return s;
 }
 
+/**
+ * reverse the string
+ * */
 string_t str_rev(const string_t s) {
   string_t s_new = str_null;
 
@@ -749,6 +829,9 @@ string_t str_rev(const string_t s) {
   return s_new;
 }
 
+/**
+ * reverse the string
+ * */
 string_t *strr_rev(string_t *s) {
 
   if (!s || !s->str)
@@ -772,6 +855,10 @@ string_t *strr_rev(string_t *s) {
   return s;
 }
 
+//  TODO: pad with UTF8-chars
+/**
+ * pad the string to len by prepending c
+ * */
 string_t str_lpad(string_t s, char c, size_t len) {
   string_t s_new;
 
@@ -782,6 +869,9 @@ string_t str_lpad(string_t s, char c, size_t len) {
   return s_new;
 }
 
+/**
+ * pad the string to len by prepending c
+ * */
 string_t *strr_lpad(string_t *s, char c, size_t len) {
 
   if (!s)
@@ -810,6 +900,10 @@ string_t *strr_lpad(string_t *s, char c, size_t len) {
   return s;
 }
 
+//TODO: pad with UTF8-chars
+/**
+ * pad the string to len by appending c
+ * */
 string_t str_rpad(string_t s, char c, size_t len) {
   string_t s_new;
 
@@ -820,6 +914,9 @@ string_t str_rpad(string_t s, char c, size_t len) {
   return s_new;
 }
 
+/**
+ * pad the string to len by appending c
+ * */
 string_t *strr_rpad(string_t *s, char c, size_t len) {
 
   if (!s)
@@ -844,6 +941,9 @@ string_t *strr_rpad(string_t *s, char c, size_t len) {
   return s;
 }
 
+/**
+ * initialize the tokenizer
+ * */
 tokenizer_t str_token_init(string_t s, const string_t delimiter) {
   tokenizer_t tok = {.delimiter = delimiter,
                      .base = s,
@@ -853,6 +953,9 @@ tokenizer_t str_token_init(string_t s, const string_t delimiter) {
   return tok;
 }
 
+/**
+ * get the next token from the tokenizer
+ * */
 char str_token_next(tokenizer_t *tok, string_t *s) {
 
   if (!tok)
@@ -907,6 +1010,9 @@ void str_clone(string_t *target, string_t s) {
   *(target->str + s.len) = 0;
 }
 
+/**
+ * clones the given char* and creates a new string with it
+ * */
 void str_clone_from_chr(string_t *target, char *c, size_t len) {
 
   if (!target)
@@ -926,6 +1032,17 @@ void str_clone_from_chr(string_t *target, char *c, size_t len) {
   *(target->str + len) = 0;
 }
 
+/**
+ * creates a string from the given format
+ *
+ * supported formats:
+ *
+ * %d: int
+ * %l: long
+ * %s: char* string
+ * %S: string_t string
+ *
+ * */
 static string_t str_from_format(char *str, va_list args) {
 
   string_t s = {.str = (void *)0, .len = 0, .flags = STR_OWNER | STR_HEAP};
@@ -1027,6 +1144,12 @@ static string_t str_from_format(char *str, va_list args) {
   return s;
 }
 
+/**
+ * string: pointer to the string
+ * offset: offset to insert-position
+ * data: pointer to the insert data 
+ * data_len: length of the insert data
+ * */
 void str_mem_insert(string_t *string, size_t offset, void *data,
                     size_t data_len) {
 
@@ -1056,6 +1179,13 @@ void str_mem_insert(string_t *string, size_t offset, void *data,
   *(string->str + string->len) = 0;
 }
 
+/**
+ * string: pointer to the string
+ * offset: offset to the replaced-start 
+ * len: length of the replaced string
+ * data: pointer to the replacement data 
+ * data_len: length of the replacement data
+ * */
 void str_mem_replace(string_t *string, size_t offset, size_t len, void *data,
                      size_t data_len) {
 
