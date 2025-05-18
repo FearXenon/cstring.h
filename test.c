@@ -439,6 +439,17 @@ static void test_str_replace() {
   assert(str_equals(s, str("bb")));
   str_free(&s);
 
+  // check for empty string 
+  s = str("");
+  strr_replace(&s, str(""), str(""));
+  assert(str_equals(s, str("")));
+  str_free(&s);
+
+  s = str("");
+  strr_replace(&s, str("1"), str("1"));
+  assert(str_equals(s, str("")));
+  str_free(&s);
+
   done;
 }
 
