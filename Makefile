@@ -4,15 +4,13 @@ OBJS = $(SRCS:.c=.o)
 
 TARGET = test 
 
-.PHONY: all run clean
+.PHONY: check-leaks run clean
 
-all: $(TARGET)
-
-run:
-	./$(TARGET)
-
-check-leaks:
+check-leaks: $(TARGET)
 	valgrind --track-origins=yes --leak-check=full -s ./$(TARGET)
+
+run: $(TARGET)
+	./$(TARGET)
 
 clean:
 	rm -f $(OBJS)
@@ -21,5 +19,3 @@ $(TARGET): $(OBJS)
 	gcc -o $@ $^
 %.o: %.c
 	gcc -g -ggdb -c -o $@ $< -I./src
-
-	 
